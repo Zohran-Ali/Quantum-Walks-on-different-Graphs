@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
 from scipy.linalg import expm
-from ipywidgets import interact, FloatSlider
+from ipywidgets import interact, widgets, FloatSlider
 from IPython.display import display
 
 
@@ -145,12 +145,6 @@ interact(update_plot, t=time_slider)
 
 
 # %%
-
-
-# %%
-
-
-# %%
 G = nx.path_graph(10)
 nx.draw(G)
 #print the adjacency list
@@ -238,11 +232,6 @@ plt.legend()
 plt.grid(True)
 plt.show()
 
-
-# %%
-
-
-# %%
 
 
 # Interactive part
