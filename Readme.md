@@ -22,7 +22,7 @@ To get started with this project, you'll need to clone the repository and instal
 ```bash
 git clone https://github.com/yourusername/quantum-classical-walks.git
 cd quantum-classical-walks
-
+```
 
 Install dependencies
  You can install the required Python packages using pip:
