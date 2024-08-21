@@ -20,8 +20,7 @@ To get started with this project, you'll need to clone the repository and instal
 ### Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/quantum-classical-walks.git
-cd quantum-classical-walks
+git clone https://github.com/Zohran-Ali/Quantum-Walks-on-different-Graphs.git
 ```
 
 Install dependencies
