@@ -65,4 +65,4 @@ Visiualisation:This has been carried out using the tkinter library to mak a GUI 
 1. **Project Name**: "Quantum-Walks-on-different-Graphs" 
 2. **GitHub URL**: `https://github.com/Zohran-Ali/Quantum-Walks-on-different-Graphs  
 
-Save this content as `README.md` in the root of your project directory.
+
