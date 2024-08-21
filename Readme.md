@@ -1,5 +1,5 @@
 
-# Quantum and Classical Random Walks on Graphs
+# Quantum-Walks-on-different-Graphs
 
 This project simulates quantum and classical random walks on various types of graphs (cyclic, 2D grids, and random graphs). It provides visualization tools to compare the evolution of probability distributions over time for both types of walks.
 
