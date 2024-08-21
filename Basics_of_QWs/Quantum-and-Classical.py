@@ -171,27 +171,27 @@ interact(update_plot, t=time_slider, graph_type=graph_type_dropdown)
 
 
 
-N=36
-graph_type = 'Random'
-H, _ = create_adjacency_matrices(N, graph_type)
-_,G= create_adjacency_matrices(N, graph_type)
+# N=36
+# graph_type = 'Random'
+# H, _ = create_adjacency_matrices(N, graph_type)
+# _,G= create_adjacency_matrices(N, graph_type)
 
-# Initial state: walker starts at vertex 0
-initial_state = Gaussian_initial_state(N, N/2, N/10)
-P = nx.to_numpy_array(G)
-P = P / np.sum(P, axis=1, keepdims=True)  # Ensure rows sum to 1
+# # Initial state: walker starts at vertex 0
+# initial_state = Gaussian_initial_state(N, N/2, N/10)
+# P = nx.to_numpy_array(G)
+# P = P / np.sum(P, axis=1, keepdims=True)  # Ensure rows sum to 1
 
-time_range = np.linspace(0, 30, 1000)
-def Generalized_Quantum_Walk(P, initial_state, t, graph_type):
+# time_range = np.linspace(0, 30, 1000)
+# def Generalized_Quantum_Walk(P, initial_state, t, graph_type):
 
-    Classical_probabilities_over_time = classical_random_walk_2d(P, initial_state, t)
-    Quantum_probabilities_over_time = evolve_2d_graph(H, initial_state, t)
-    plot_probability_evolution()
-    for i in t:
-        update_plot(i, graph_type)
+#     Classical_probabilities_over_time = classical_random_walk_2d(P, initial_state, t)
+#     Quantum_probabilities_over_time = evolve_2d_graph(H, initial_state, t)
+#     plot_probability_evolution()
+#     for i in t:
+#         update_plot(i, graph_type)
     
 
-Generalized_Quantum_Walk(P, initial_state, time_range, graph_type)
+# Generalized_Quantum_Walk(P, initial_state, time_range, graph_type)
     
   
 
