@@ -2,7 +2,9 @@
 #%%
 import tkinter as tk
 import numpy as np
-from Function import create_adjacency_matrices,evolve_2d_graph,coherent_state
+import matplotlib.cm as cm
+import matplotlib.colors as mcolors
+from Function import create_adjacency_matrices,evolve_2d_graph,coherent_state, Gaussian_initial_state,localized_initial_state,superposition_initial_state
 from numpy.linalg import norm
 from scipy.linalg import expm
 import matplotlib.pyplot as plt
@@ -42,24 +44,15 @@ def run_simulation():
 
         # Create the initial state vector based on the type selected
         if initial_state_type == "Localized":
-            ps_0= np.zeros(N, dtype=complex)
-            ps_0[0] = 1  # Start the walker at the middle vertex
+            ps_0 = localized_initial_state(N,0)
 
         elif initial_state_type == "Superposition":
-            ps_0 = np.zeros(N)
-            start_index = int(N / 4)
-            end_index = int(N / 2)
-            ps_0[start_index:end_index] = 1  # Initial state
-            ps_0 = ps_0 / norm(ps_0)  # Normalize the state
 
+            ps_0 = superposition_initial_state(N,0,N//2)
+            
         elif initial_state_type == "Gaussian":
         
-            ps_0= np.zeros(N, dtype=complex)
-            # Gaussian Initial State (Vectorized)
-            positions = np.arange(N)
-            ps_0 = np.exp(-((positions - N/2)**2) / (2 * (N/10)**2)).reshape(N, 1)
-            #p_si0[N//2] = 1  # Start the walker at the middle vertex
-            ps_0 = ps_0 / norm(ps_0)  # Normalizing the state
+            ps_0 = Gaussian_initial_state(N,N/2,N/10)
                
 
         elif initial_state_type == "Coherent":
@@ -87,8 +80,9 @@ def run_simulation():
         
         fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8))  # Two subplots in a vertical layout
         fig.subplots_adjust(hspace=0.5)
+        norms = mcolors.Normalize(vmin=data.min(), vmax=data.max())
         # First plot
-        cax1 = ax1.imshow(data, cmap='viridis', aspect='auto', extent=[0, 150, N, 1])
+        cax1 = ax1.imshow(data, cmap='viridis', norm=norms, aspect='auto', extent=[0, 150, N, 1])
         fig.colorbar(cax1, ax=ax1, label='Probability')
         ax1.set_title(f'QW Probability Evolution on a {graph_type} graph, with {initial_state_type} initial state ')
         ax1.set_xlabel('Time')
