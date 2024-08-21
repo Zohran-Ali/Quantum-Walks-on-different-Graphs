@@ -13,8 +13,10 @@ def Gaussian_initial_state(N,center, width):
     Function to generate a Gaussian initial state
     Parameters:
     N(int): The number of vertices
+    center(int): The center of the Gaussian
+    width(int): The width of the Gaussian
     Returns:
-    numpy.ndarray: The probability distribution of the position at each step for each position.
+    numpy.ndarray: The normalized initial state of the walker
     """
     ps_0= np.zeros(N, dtype=complex)
     positions = np.arange(N)
@@ -27,8 +29,10 @@ def superposition_initial_state(N, start_index, end_index):
     Function to generate a superposition initial state
     Parameters:
     N(int): The number of vertices
+    start_index(int): The index of the starting vertex
+    end_index(int): The index of the ending vertex
     Returns:
-    numpy.ndarray: The probability distribution of the position at each step for each position.
+    numpy.ndarray: The normalized initial state of the walker
     """
     ps_0 = np.zeros(N)
     ps_0[start_index:end_index] = 1  # Initial state
@@ -40,8 +44,9 @@ def localized_initial_state(N, start_index):
     Function to generate a localized initial state
     Parameters:
     N(int): The number of vertices
+    start_index(int): The index of the starting vertex
     Returns:
-    numpy.ndarray: The probability distribution of the position at each step for each position.
+    numpy.ndarray:The normalized initial state of the walker
     """
     ps_0= np.zeros(N, dtype=complex)
     ps_0[start_index] = 1  # Start the walker at the middle vertex
@@ -96,35 +101,32 @@ def quantum_walk(steps):
     return np.sum(np.abs(position_states)**2, axis=1)
 
 def create_adjacency_matrices(N, graph_type):
+    """
+    Creates adjacency matrices for different types of graphs.
+
+    Parameters:
+    - N (int): The number of vertices in the graph.
+    - graph_type (str): The type of graph to create. Can be "Random", "2D Grid", or "Cyclic Graph".
+
+    Returns:
+    - H (numpy.ndarray): The adjacency matrix of the graph.
+    - G (networkx.Graph): The graph object.
+    """
     if graph_type == "Random":
         G = generate_random_graph(N, p=0.3)
         H = nx.adjacency_matrix(G).todense()
-       # plt.figure(figsize=(6, 6))
-      #  nx.draw(G, with_labels=True, node_size=500, node_color="lightblue", font_size=8)
-       # plt.title("Random Graph with  Nodes")
-      #  plt.show()
+     
     elif graph_type == "2D Grid":
         side = int(np.sqrt(N))
         if side * side != N:
             raise ValueError("Number of vertices must be a perfect square for 2D grid.")
         G = nx.grid_2d_graph(side,side)
-        # Defining the adjacency matrix as the Hamiltonian
         H = nx.adjacency_matrix(G).todense()
-        # Draw the graph
-        #plt.figure(figsize=(6, 6))
-        #nx.draw(G, with_labels=True, node_size=500, node_color="lightblue", font_size=8)
-        #plt.title("Cyclic Graph with 51 Nodes")
-        #plt.show()
+      
     elif graph_type == "Cyclic Graph":
         G = nx.cycle_graph(N)
         H=create_adjacency_matrix_constant_weights(N)
-        #pos = nx.circular_layout(G)
-
-        # Draw the graph
-       # plt.figure(figsize=(6, 6))
-        #nx.draw(G, pos, with_labels=True, node_size=500, node_color="lightblue", font_size=8)
-        #plt.title("Cyclic Graph with 51 Nodes")
-        #plt.show()
+       
     else:
         raise ValueError("Invalid graph type selected.")
     return H,G
@@ -224,6 +226,17 @@ def time_evolution(H, initial_state, t):
     return U @ initial_state
 
 def evolve_2d_graph(H, ps_0, t):
+    """
+    Evolves a 2D graph based on the given Hamiltonian, initial state, and time points.
+
+    Parameters:
+        H (np.ndarray): The Hamiltonian matrix representing the graph.
+        ps_0 (np.ndarray): The initial state of the graph.
+        t (list or np.ndarray): A list of time points for the evolution.
+
+    Returns:
+        data (np.ndarray): A 2D array containing the evolved state probabilities at each time point.
+    """
     imag = complex(0, -1)
     data = np.zeros((H.shape[0], len(t)))
     for i, ti in enumerate(t):
