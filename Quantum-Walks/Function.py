@@ -8,7 +8,45 @@ from scipy.special import factorial
 import cmath
 #%%
 
+def Gaussian_initial_state(N,center, width):
+    """
+    Function to generate a Gaussian initial state
+    Parameters:
+    N(int): The number of vertices
+    Returns:
+    numpy.ndarray: The probability distribution of the position at each step for each position.
+    """
+    ps_0= np.zeros(N, dtype=complex)
+    positions = np.arange(N)
+    ps_0 = np.exp(-((positions - center)**2) / (2 * (width)**2)).reshape(N, 1)
+    ps_0 = ps_0 / norm(ps_0)  # Normalizing the state
+    return ps_0
 
+def superposition_initial_state(N, start_index, end_index):
+    """
+    Function to generate a superposition initial state
+    Parameters:
+    N(int): The number of vertices
+    Returns:
+    numpy.ndarray: The probability distribution of the position at each step for each position.
+    """
+    ps_0 = np.zeros(N)
+    ps_0[start_index:end_index] = 1  # Initial state
+    ps_0 = ps_0 / norm(ps_0)  # Normalizing the state
+    return ps_0
+
+def localized_initial_state(N, start_index):
+    """
+    Function to generate a localized initial state
+    Parameters:
+    N(int): The number of vertices
+    Returns:
+    numpy.ndarray: The probability distribution of the position at each step for each position.
+    """
+    ps_0= np.zeros(N, dtype=complex)
+    ps_0[start_index] = 1  # Start the walker at the middle vertex
+    ps_0 = ps_0 / norm(ps_0)  # Normalizing the state
+    return ps_0
 def generate_random_graph(n, p):
     """
     Generate a random graph using the Erdős-Rényi model.
