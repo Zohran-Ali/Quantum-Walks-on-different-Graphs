@@ -1,0 +1,6 @@
+numpy
+matplotlib
+networkx
+scipy
+ipywidgets 
+tkinter
